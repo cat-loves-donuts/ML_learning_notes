@@ -137,13 +137,37 @@ What we want  is getthe P(x|z) to make the logP(x) as big as possible, now we ha
 
 ![image051](https://user-images.githubusercontent.com/43735308/155109152-44a3ea0d-6749-4043-a133-09905907dcf5.jpg)
 
+One interesting thing is that when we keep the P(x|z) not change, because logP(x) only related to P(x|z), thus the value of logP(x) will not change. Then if we change the value of q(z|x) to make Lb bigger and the KL divergence smaller, when we make the q(z|x) equail to P(z|x), KL divergence will become 0, LB will totalluy equial to logP(X). Thus we can say that no matter how logP(x) changes, we can always modify out parameters to make Lb equial to logP(x), because Lb is the nether of logP(x), to get the result of Maximum logP(x) is equial to get the result of Maximum Lb.
 
+From a macro perspective, modify P(x|z) is change Decoder, modify q(z|x) is modify Encoder. Therefore, the training logic of VAE becomes, every one step forward of Decoder will make Encoder to modify itself to the same of Decoder. It is like Encoder holding a rifle behind Decoder, when the next the Decoder is training, Decoder annot step back....
 
+Now let us get Maximym Lb:
 
+![image057](https://user-images.githubusercontent.com/43735308/155110956-f333d9d4-539e-4c05-a0bb-c10e228994c8.png)
 
+![image058](https://user-images.githubusercontent.com/43735308/155110965-69b89952-2b89-4f0f-8d9e-17414894096d.png)
 
+![image059](https://user-images.githubusercontent.com/43735308/155110971-ae854561-13de-42a7-983e-f5a7084ce548.png)
 
+![image060](https://user-images.githubusercontent.com/43735308/155110974-a8c2b2f7-b8b8-411e-93e9-574d1613a67e.png)
 
+Thus, what we need to solve is the minimum value of ![image061](https://user-images.githubusercontent.com/43735308/155111090-0367033b-25d6-4fa3-b810-436eaf9a3223.png) and the maximum value of ![image062](https://user-images.githubusercontent.com/43735308/155111153-cbe7f7dd-a81d-474b-a104-565b3bc6ddeb.png).
 
+The fisrt equiation equail to:
 
+![image063](https://user-images.githubusercontent.com/43735308/155111232-b702943a-c8df-4335-b5e8-510d4f4d3eb8.png)
+
+Thus this equiation is the loss function (Minimized2) of VAE in second section. 
+
+The second equiation:
+
+![image064](https://user-images.githubusercontent.com/43735308/155111641-8cc33712-b20e-417f-8f74-96c5c01021a1.png)
+
+![image065](https://user-images.githubusercontent.com/43735308/155111654-afe7f3ef-b5d0-4ffa-9460-de9c0fc71590.png)
+
+The above expectation means that the value (the output of decoder) shoud be as high as poosible when given a condition (the output of encoder). It is similar to a AE loss if we do not count in the variance:
+
+![image067](https://user-images.githubusercontent.com/43735308/155111999-51c42e3e-2524-4021-bb2a-8ac8c632d52b.jpg)
+
+Thus, this equiation is the first loss function (Minimized1) in VAE struture in section 2.
 
