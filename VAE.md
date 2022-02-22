@@ -1,6 +1,6 @@
 # VAE
 
-***If your are interested, please check the original link.***
+***If your are interested, please check the original link. I translated the original web page by meself, so please ignore the typo or whatever...***
 
 **original link (Chinese):http://www.gwylab.com/note-vae.html**
 
