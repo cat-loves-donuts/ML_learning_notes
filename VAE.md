@@ -1,4 +1,4 @@
-# VAE
+# What is VAE
 
 ***If your are interested, please check the original link. I translated the original web page by meself, so please ignore the typo or whatever...***
 
