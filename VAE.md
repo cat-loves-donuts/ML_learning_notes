@@ -35,7 +35,22 @@ dataset, Deep AE could compressed a 784 dimensional vector(28*28) to 30.
 Currenly we got a AE model which has good ability to reconstruct clear images. But this is not the end, because, for a generation model, the decoder part should have the ability to work
 indipendently and could generate a clear and real image no matter what code you put in under specific dimension restriction. Let us analyze why whis happend.
 
-Let's make an assumption that we have 2 training pictures (normally we have much more training data....), one for 
+Let's make an assumption that we have 2 training pictures (normally we have much more training data....), one is full moon and another one is half moon. According to our training, the AE could reproduce both image very perfectly.
+
+![image008](https://user-images.githubusercontent.com/43735308/155088931-bb881d53-7413-4663-a062-4d0a781e9eab.jpg)
+
+Then, we choose a point on the coding space and give it to our AE, we hope it could give us a nice and clear picture which contains a 3/4 moon. But, in fact, what we will get is
+a fuzzy and un-recongnized picture. A reaonable explaine is that becase the encoding and decoding process both through the NN, this is process is a non-linear process. Therefore, the migaration between points in the code space is very irregular.
+
+One way to solve this is including noise, make the coding space bigger and could cover the empty encoding points on coding space.
+
+![image009](https://user-images.githubusercontent.com/43735308/155089603-368492e5-6d0c-4282-a49f-65c3952abc0c.jpg)
+
+As the image shows, we added some noise when we coding, make sure that the coding points for each picture will located in the green part. Thus, during the training process, all the points in the green part could be sampled, therefore, the decoder will try to reconstructed all the points in green range to the original picture. Then we could focusing on the previous distortion point, it located between full moon and hal moon, thus out decoder will try it best to reconstruted the picture back to full moon and also the half moon. Thus it will choose a middel solution which is a 3/4 moon.
+
+It is clear that we could use some noise in encoder to cover the distortion regions. But this is still not enough, because on the yellow point which is located very far away from the green part, AE still cannot sample the yellow point. To solve this, we could try to pull the nise range as long as possible to cover it. For each
+
+
 
 
 
