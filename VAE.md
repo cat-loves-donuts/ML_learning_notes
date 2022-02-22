@@ -1,5 +1,7 @@
 # VAE
 
+***If your are interested, please check the original link.***
+
 **original link (Chinese):http://www.gwylab.com/note-vae.html**
 
 **Variational Auto Encoder (VAE)** is a generation model, the basic idea of VAE is very simple, but we need to introduce the idea of **Auto Encoder (AE)** first: transforme a bunch of real samples into a ideal data distribution through the encoder, and then pass this data distribution to a decoder
