@@ -48,7 +48,100 @@ One way to solve this is including noise, make the coding space bigger and could
 
 As the image shows, we added some noise when we coding, make sure that the coding points for each picture will located in the green part. Thus, during the training process, all the points in the green part could be sampled, therefore, the decoder will try to reconstructed all the points in green range to the original picture. Then we could focusing on the previous distortion point, it located between full moon and hal moon, thus out decoder will try it best to reconstruted the picture back to full moon and also the half moon. Thus it will choose a middel solution which is a 3/4 moon.
 
-It is clear that we could use some noise in encoder to cover the distortion regions. But this is still not enough, because on the yellow point which is located very far away from the green part, AE still cannot sample the yellow point. To solve this, we could try to pull the nise range as long as possible to cover it. For each
+It is clear that we could use some noise in encoder to cover the distortion regions. But this is still not enough, because on the yellow point which is located very far away from the green part, AE still cannot sample the yellow point. To solve this, we could try to pull the nise range as long as possible to cover the whole coding space, but we have to make sure that the coding near the original coding ahve higher possibility. The further the point away from the coding points, the lower possibility it has. And this is the method to make the image coding become continues from discrete and this is also the main idea of VAE.
+
+![image010](https://user-images.githubusercontent.com/43735308/155097539-5b078fbf-9698-40f2-9e8d-38a63b825e5c.jpg)
+
+## The structure of VAE
+![image011](https://user-images.githubusercontent.com/43735308/155097814-f4c4b883-b7b1-45a5-873b-c3e4dc41ba37.jpg)
+
+This is the structure of VAE. Let's make it simple:
+
+In AE, encoder will generate a code directly, but in VAE, to add suitable noise for codes, the encoder will output 2 codes, one is the original code(m1, m2, m3) and another one is code used to control the degree of noise(a1, a2, a3) **(Sorry guys, I cannot find the greek symbol)**, then we also have a stochastic noise code(e1, e2, e3). The code(a1, a2, a3) is used to give weights for stochastic noise code(e1, e2, e3). The reason why add exp(ai) is to guarantee the assigned weight is a positive value. And finally, add the original code(m1, m2, m3) with noise code to get the VAE code(c1, c2, c3). Other things are similar with Deep AE.
+
+For loss funtion, VAE adds a loss function Minimize2, this is essential. To make the reconstructed images have higher quiality, AE will make the noise have the lowest influence on reconstructed images, thus it will give lower weights on noise, thus is only need to make (a1 ,a2, a3) be the negative infinity values. So the second loss(Minimize2) is used to limit the AE to do such extreme operation. It is clear that exp(ai) - (1 + ai) will get lowest when ai=0, thus (a1,a2,a3) will no be assigned to negative infinity values.
+
+The following parts will be the detailed mathmatical reasoning of VAE.
+
+## How VAE works
+
+As we all know, for generation models, our mainestream models include **Hidden Markov model(HMM)**, **Naive Bayes Model(NB)** and **Gaussian Mixture Model(GMM)**. And VAE belongs to GMM.
+
+What is GMM? **The distribution of any data can be regarded as the superposition of several Gaussian distributions**.
+
+![image017](https://user-images.githubusercontent.com/43735308/155103099-953779ae-19c2-4c7c-a860-fbcc4a5d3b7c.jpg)
+
+If P(x) in the previous pic repersents a distribution, then there is a method could take it apart into multiple Gaussian disstribution like the blue lines. Well, there is a prof that when the number of splites reaches 512, the superposition of several Gaussian distributions will have very very small error with the original distribution.
+
+Thus we could use this theory to code data. The must directly way is that use a set of Gaussian distributions parameters as encode value.
+
+![image018](https://user-images.githubusercontent.com/43735308/155103982-86cc42b5-63bc-45d0-be04-9ab1c10f2594.jpg)
+
+Like what pic shows, m means a index in coding dimension. If we have 512 dimensional code, m should between 1 and 512. The m will follow a probability distribution P(m) (multinomial distribution). Now, the corrisponding relationship is, for every sampled m, it will corispond to a small Gaussian distribution N(um,Em), P(X) could equial to the sum of those Gaussian distributions.
+
+![image020](https://user-images.githubusercontent.com/43735308/155104806-9126fc3e-495c-4f65-b02e-55f7da568c42.png)
+
+And ![image021](https://user-images.githubusercontent.com/43735308/155105021-56421065-1d81-40c7-94dd-b4c2e4b849f7.png), ![image022](https://user-images.githubusercontent.com/43735308/155105064-106e36a9-0741-437c-9a47-7e91cdb5d8d3.png)
+
+The previous method is very simple and directly, it based on the coding method which is used for discrete and have heavily distorted regions we mentioned before.
+
+![image023](https://user-images.githubusercontent.com/43735308/155105432-47d45435-1c49-4bf7-8cd8-13bc6ca06331.jpg)
+
+Now, we change our code into a continuous variable z, we make a rule that z will follow a normal distribution N(0,1) (In fact, other continous distribution is also ok). For each sample z, there are 2 parameters u and a to repersent the mean and variation, respectively, when z correspond to Gaussian distribution. Then the sum of all Gaussian distributions in the integration domain becomes the original distribution P(X).
+
+![image027](https://user-images.githubusercontent.com/43735308/155106556-6745ab53-1556-449c-8bd0-78abac1af1f1.png)
+
+And ![image028](https://user-images.githubusercontent.com/43735308/155106616-03aa9b71-5d80-4116-82a9-8b79cb4f8e69.png), ![image029](https://user-images.githubusercontent.com/43735308/155106648-c013ef35-1053-46e7-8076-998f557fd296.png)
+
+Because P(z) is already knowen value, P(x|z) is unknowen but ![image029 (1)](https://user-images.githubusercontent.com/43735308/155106873-7545f4fd-7883-49f4-aa43-47d39125cfaf.png), thus what we really need to know is the repersentation functions of u and a. Bcause P(x)is very comlecated normally and u and a are very hard to calculate, thus we use NN to help us.
+
+The first NN called Decoder, it will find out u and a, this equial to get p(x|z).
+
+![image033](https://user-images.githubusercontent.com/43735308/155107296-ecc5617d-7aae-4cbd-8360-fc3af3c81b58.jpg)
+
+The second one is called Encoder, it will find **q(z|x)** (We will mention is one later in the equiation), q can repersent any distribution.
+
+![image036](https://user-images.githubusercontent.com/43735308/155107586-f64a5f3e-abea-44f3-8af7-a28739538293.jpg)
+
+The reason why we need the second NN Encoder is taht we need it to help Decoder to find P(x|z).
+
+Thus we need to get the result of 
+
+![image027 (1)](https://user-images.githubusercontent.com/43735308/155107827-13c94814-51f0-407c-9e99-a30bfc287113.png)
+
+We hope P(X) as bigger as possible, this equial to: 
+
+![image038](https://user-images.githubusercontent.com/43735308/155107949-aa0097a6-6b9d-4c41-a890-dc74f7ae85c4.png)
+
+Notice:
+
+![image039](https://user-images.githubusercontent.com/43735308/155108040-f47409a9-0120-4435-a571-10edcd4c4f22.png) (q(z|x) coud be any distribution)
+
+![image040](https://user-images.githubusercontent.com/43735308/155108237-1b396915-17ff-4541-9e25-422abb085504.png)
+
+![image041](https://user-images.githubusercontent.com/43735308/155108257-4668ac11-9df3-4bc7-9efb-dfdf84156533.png)
+
+![image042](https://user-images.githubusercontent.com/43735308/155108269-fe80a667-8711-4f2b-a53e-49daa5e211d3.png)
+
+![image043](https://user-images.githubusercontent.com/43735308/155108272-676f12a2-29d3-4928-906e-0338df92ffbd.png)
+
+The second value in the previous equiation is bigger or equail to 0, thus we could get the nether of logP(x):
+
+![image045](https://user-images.githubusercontent.com/43735308/155108509-5e08e574-f5d1-4679-8d23-c850bc5a0efc.png)
+
+We make the nether as ![image046](https://user-images.githubusercontent.com/43735308/155108755-add9df4a-2b7b-4ec0-822d-87600a509392.png)
+
+Then, the original equation will be ![image047](https://user-images.githubusercontent.com/43735308/155108802-6b116d98-aa54-4f01-beef-23d357ce9066.png)
+
+What we want  is getthe P(x|z) to make the logP(x) as big as possible, now we have a q(z|x) and the q(z|x) will maximize the logP(x). Let us see the relationship of logP(x) and Lb:
+
+![image051](https://user-images.githubusercontent.com/43735308/155109152-44a3ea0d-6749-4043-a133-09905907dcf5.jpg)
+
+
+
+
+
+
 
 
 
