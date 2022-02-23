@@ -30,6 +30,16 @@ Based on the problems, VQ-VAE proposed a solution: dimensional reduction first, 
 
 ### Dimensionality reduction discretization
 
+Because PixcelCNN generates discrete sequences, if we want to use PixcelCNN to model the coding vectore we need the coding vector also be discrete. But the normal dimensionality reduction method we sued such as AE will generate continuously coding vector. Besides generate discrete variables means gradient vanishing. Another problem is that how could we guarantee the quality of new generated images.
+
+Fortunatly, VQ-VAE offereing some useful training stratagies tosolve those problems.
+
+### Nearest neighbor reconstruction
+
+
+
+
+
 
 
 
