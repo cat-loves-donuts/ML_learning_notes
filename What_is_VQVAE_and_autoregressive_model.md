@@ -24,10 +24,11 @@ The AR method is safe and could do probability estimation properly. But it has a
 
 There is another problem of AR model, it broken the links between categories. Although each pixcel in image is discrete and we could make it as a 256 classes classification problem. But, in fact, the nearby pixcels have very little difference.On the mathmatical way, our objective function, cross entropy, is -logP(t), assume that the target pixcel value is 100 and prediction is 99, the P(t) will be 0 because the category is different and -logP(t) will be very large and bring a large loss. But according to the visilization, the pixcel value of 100 and 99 do not have big differences, human eyes sometmes cannot identify the differences. And that means we should not get this kind of big loss.
 
+## How VQ-VAE works
 
+Based on the problems, VQ-VAE proposed a solution: dimensional reduction first, then model the encoded vector with PixelCNN.
 
-
-
+### Dimensionality reduction discretization
 
 
 
