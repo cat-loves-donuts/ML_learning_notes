@@ -59,15 +59,19 @@ Func.1 means when we input x, the probability of z = k is:
 
 6. zq(x) will be used as input of decoder and reconstruct image, output the p(x|z).
 
+We could take this transformation from ze(x) to zq(x) as a clustering. We using a vectore in Embedding to repersent the features after Encdoer, or take this process as a non-linear transformation.
+
+We can change q(z|x) into one-hot coding formate and take it as a propability distribution. Totally we have K dimension in this one-hot coding and each dimension repersents a probablity of ei (i =1,2,....K) in codebook (Embedding). From the VAE side, we give this K-dimensional distribution a uniform distribution as a prior, pi = 1/K. Thus in ELOB, the KL() part become a constant value, logK.
+
 Another important part is loss function.
 
 ![4](https://user-images.githubusercontent.com/43735308/155495801-42a66fe5-2308-4959-adc6-83f1d7d8c886.PNG)
 
-The first part repersents reconstruction error, this is a binary cross-entropy for Decoder. The second one is a loss used to update the dictonary elements in Embedding, sg[] means stop gradient which means do not operat the gradient back propagation, thus this part only works for dictionary elements (verctors) training. The last part is loss ofr Encoder, the official explaine of it is:
+The first part repersents reconstruction error, this is a binary cross-entropy for Decoder. The second one is a loss used to update the dictonary elements in Embedding, sg[] means stop gradient which means do not operat the gradient back propagation, thus this part only works for dictionary elements (verctors) training. The last part is loss for Encoder, the official explaine of it is:
 
 “Finally, since the volume of the embedding space is dimensionless, it can grow arbitrarily if the embeddings ei do not train as fast as the encoder parameters. To make sure the encoder commits to an embedding and its output does not grow, we add a commitment loss”
 
-It means if ei cannot train as fast as encoder parameters, it could increase to any value. Therefore, to make sure that ecoder could give a reasonable embedding, we add a punishment on encoder. And the hyper parameter B (You know which parameter I mean right?) could be any value between [0.1, 2], they choose 0.25. 
+It means if ei cannot train as fast as encoder parameters, it could increase to any value. Therefore, to make sure that ecoder could give a reasonable embedding, we add a punishment on encoder. And the hyper parameter B (You know which parameter I mean right?) could be any value between [0.1, 2], they choose 0.25. It is used to avoid the output of encoder will frequntly jump between each codebook embedding.
 
 Besides, when the NN backward, the reconstruction error gradient information will directly pass to Encoder, when there is a tranformation by Embedding. As the previous working flow of VQ-VAE shows, the red line is the gradient when backwards, Since the output representation of the encoder and the input to the decoder share the same D dimensional space, the gradients contain useful information for how the encoder has to change its output to lower the reconstruction loss.
 
