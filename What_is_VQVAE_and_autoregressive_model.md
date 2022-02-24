@@ -1,5 +1,8 @@
 # What is VQVAE and Autoregressive models?
 
+**The related web pages: https://blog.csdn.net/StreamRock/article/details/93881187**
+**https://blog.csdn.net/artistkeepmonkey/article/details/121023532**
+
 **Vector Quantised-Variational AutoEncoder (VQ-VAE)** was first proposed in paper "Neural Discrete Representation Learning". One big different of VQ-VAE and VAE is that:
 
 VAE assumes the hidden vectors distribution follows Gaussian distribution.
@@ -40,8 +43,29 @@ Based on the problems, VQ-VAE proposed a solution: dimensional reduction first, 
 
 Func.1 means when we input x, the probability of z = k is: 
 
-  1). when 
+  1). when k is a vector index which has the colest distence to Ze(x) in vector sequence {e1, e2, ..., ek}, the conditional pobability is 1.
+  
+  2). otherwise is 0.
+  
+  The vector distence is measured by Euler distance in Func.1.
+  
+  ![3](https://user-images.githubusercontent.com/43735308/155494618-f206ef54-e83d-4fc2-8ca5-262a3b49d554.PNG)
 
+  Func.2 means find the k by calcluating vector distence between vectore sequence and Ze(x) and use ek as the coding output zq(x).
+  
+4. zq(x) will be used as input of decoder and reconstruct image, output the p(x|z).
+
+Another important part is loss function.
+
+![4](https://user-images.githubusercontent.com/43735308/155495801-42a66fe5-2308-4959-adc6-83f1d7d8c886.PNG)
+
+The first part repersents reconstruction error, this is a binary cross-entropy for Decoder. The second one is a loss used to update the dictonary elements in Embedding, sg[] means stop gradient which means do not operat the gradient back propagation, thus this part only works for dictionary elements (verctors) training. The last part is loss ofr Encoder, the official explaine of it is:
+
+“Finally, since the volume of the embedding space is dimensionless, it can grow arbitrarily if the embeddings ei do not train as fast as the encoder parameters. To make sure the encoder commits to an embedding and its output does not grow, we add a commitment loss”
+
+It means if ei cannot train as fast as encoder parameters, it could increase to any value. Therefore, to make sure that ecoder could give a reasonable embedding, we add a punishment on encoder. And the hyper parameter B (You know which parameter I mean right?) could be any value between [0.1, 2], they choose 0.25. 
+
+Besides, when the NN backward, the reconstruction error gradient information will directly pass to Encoder, when there is a tranformation by Embedding. As the previous working flow of VQ-VAE shows, the red line is the gradient when backwards, Since the output representation of the encoder and the input to the decoder share the same D dimensional space, the gradients contain useful information for how the encoder has to change its output to lower the reconstruction loss.
 
 
 
