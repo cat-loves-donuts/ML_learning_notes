@@ -28,16 +28,19 @@ There is another problem of AR model, it broken the links between categories. Al
 
 Based on the problems, VQ-VAE proposed a solution: dimensional reduction first, then model the encoded vector with PixelCNN.
 
-### Dimensionality reduction discretization
+![2222](https://user-images.githubusercontent.com/43735308/155452506-cb0f84d1-8d54-4be2-a61b-48b39b30004b.PNG)
 
-Because PixcelCNN generates discrete sequences, if we want to use PixcelCNN to model the coding vectore we need the coding vector also be discrete. But the normal dimensionality reduction method we sued such as AE will generate continuously coding vector. Besides generate discrete variables means gradient vanishing. Another problem is that how could we guarantee the quality of new generated images.
+### The work flow of VQ-VAE
 
-Fortunatly, VQ-VAE offereing some useful training stratagies tosolve those problems.
+1. Input x whose structure is [B, 3, 32, 32], B is the batch size.
+2. After encoder, we get Ze(x) with [B, C=D, H, W] size, C means the Channels number of Conv layer in encoder and D means the dimensions of vectoe quantization, D is also the dimension of vectors which saved in Embedding. H and W mean the hight and width of the feature map after encoder.
+3. Transpose Ze(x) to [B * H * W, D] and calculate the distense between the codes (B * H * W) and K vectors in Embedding based on Nearest neighbors algorithm.
 
-### Nearest neighbor reconstruction
+![1](https://user-images.githubusercontent.com/43735308/155453699-1acb370d-2b7b-4e24-9cf6-28d70d66a522.PNG)
 
+Func.1 means when we input x, the probability of z = k is: 
 
-
+  1). when 
 
 
 
