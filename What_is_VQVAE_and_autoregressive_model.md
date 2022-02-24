@@ -52,8 +52,12 @@ Func.1 means when we input x, the probability of z = k is:
   ![3](https://user-images.githubusercontent.com/43735308/155494618-f206ef54-e83d-4fc2-8ca5-262a3b49d554.PNG)
 
   Func.2 means find the k by calcluating vector distence between vectore sequence and Ze(x) and use ek as the coding output zq(x).
-  
-4. zq(x) will be used as input of decoder and reconstruct image, output the p(x|z).
+
+4. Evey D dimensional feature in (B * H * W) will find the closest vectore in Embedding.
+
+
+
+5. zq(x) will be used as input of decoder and reconstruct image, output the p(x|z).
 
 Another important part is loss function.
 
