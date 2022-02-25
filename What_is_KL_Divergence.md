@@ -44,7 +44,7 @@ The p is the observed probability distribution, q is another approximate distrib
 
 ![75110-e94b5412d85e5698](https://user-images.githubusercontent.com/43735308/155649082-8edd8bd7-7c5e-4c7f-a0df-0a3712c02cd8.jpg)
 
-
+Obviously, KL-divergence is the expectation of the log difference between the original distribution p and the approximate distribution q. 
 
 
 
