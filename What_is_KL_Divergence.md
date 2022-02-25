@@ -18,7 +18,7 @@ This is very valuable data, but still have some problems. Because we are very fa
 
 ![75110-6f8844d5047fc1ee](https://user-images.githubusercontent.com/43735308/155513610-13b712bb-4b73-4b8c-9104-52073b3e8f79.jpg)
 
-Well, of course, our raw data is not uniformly distributed. As a plan B (We always have plan B), another simple model that comes to our mind is the binomial distribution. There are a total of n=10 alveoli in the worm's mouth, and the occurrence of teeth in each alveolar is an independent event, and the probability is p. Then the number of worm teeth is the expected value E[x]=n*p, and the actual expected value is the average value of the observed data, for example, 5.7, then p=0.57, and the binomial distribution is:
+Well, of course, our raw data is not uniformly distributed. As a plan B (We always have plan B), another simple model that comes to our mind is the binomial distribution. There are a total of ```n=10``` alveoli in the worm's mouth, and the occurrence of teeth in each alveolar is an independent event, and the probability is ```p```. Then the number of worm teeth is the expected value ```E[x]=n*p```, and the actual expected value is the average value of the observed data, for example, 5.7, then ```p=0.57```, and the binomial distribution is:
 
 ![75110-8ad3782fe0220619](https://user-images.githubusercontent.com/43735308/155514335-0ba701aa-40ad-4de4-b114-9af9e853d5df.jpg)
 
@@ -30,27 +30,45 @@ So, we need to figure out which distribution is much closer to the original one?
 
 ### The entropy of the data
 
-K-L divergence originates from information theory. Information theory mainly studies how to quantify information in data. The most important unit of information measurement is entropy, which is generally represented by H. The formula for the entropy of a distribution is as follows:
+K-L divergence originates from information theory. Information theory mainly studies how to quantify information in data. The most important unit of information measurement is entropy, which is generally represented by ```H```. The formula for the entropy of a distribution is as follows:
 
 ![75110-7977551fba322af7](https://user-images.githubusercontent.com/43735308/155515459-b4e6e0e6-23f6-424d-b2cd-f084b1e1c788.jpg)
 
-The log element do not have a certain base, the base could be 2, e or 10, etc. If we use 2 as base to calculate the H, we could take this H value as the minimum number of bits required to encode the information. Let's take the space worms as an example, information means the expirical distribution which we got from the observation gives the number of teeths. The entropy of the original probability distribution is 3.12 bits, it means the number of bits we need to encode th information of space worms teeth number probability.
+The log element do not have a certain base, the base could be ```2, e or 10```, etc. If we use ```2``` as base to calculate the H, we could take this ```H``` value as the minimum number of bits required to encode the information. Let's take the space worms as an example, information means the expirical distribution which we got from the observation gives the number of teeths. The entropy of the original probability distribution is 3.12 bits, it means the number of bits we need to encode th information of space worms teeth number probability.
 
 But the entropy value do not tell us how to compress data to the minimum entropy or how to encode the data to get the optimal result (storage optimal). The main role of entropy is to tell us the theoretical lower bound (storage space) of the optimal encoding information scheme, and a way to measure the amount of information in the data. Understanding entropy, we know how much information is contained in the data, and now we can calculate how much information is lost when we use a probability distribution with parameters to approximate the original data distribution.
 
 ### Using KL-divergence to measure information loss
 
-The p is the observed probability distribution, q is another approximate distribution used to approximate p, then the KL-divergene of p and q is:
+The ```p``` is the observed probability distribution, ```q``` is another approximate distribution used to approximate ```p```, then the KL-divergene of ```p``` and ```q``` is:
 
 ![75110-e94b5412d85e5698](https://user-images.githubusercontent.com/43735308/155649082-8edd8bd7-7c5e-4c7f-a0df-0a3712c02cd8.jpg)
 
-Obviously, KL-divergence is the expectation of the log difference between the original distribution p and the approximate distribution q. If we still use 2 as the base of log, then KL-divergence means the number of bits of information loss. We also use the follwoing way to repersent KL-divergence.
+Obviously, KL-divergence is the expectation of the log difference between the original distribution ```p``` and the approximate distribution ```q```. If we still use 2 as the base of log, then KL-divergence means the number of bits of information loss. We also use the follwoing way to repersent KL-divergence.
 
 ![75110-5e6109b0e9ec780a](https://user-images.githubusercontent.com/43735308/155666519-326c5061-8072-4aea-9175-c8e1986caee6.jpg)
 
 ![75110-d602c1e8d0fe3689](https://user-images.githubusercontent.com/43735308/155666571-21e40dd2-3fa7-4490-ad57-a0cc0bab1243.jpg)
 
+### Compare 2 distribution
 
+Let's calculate the KL-divergence between origianl distribution and Uniform distribution (**Using Uniform distribution to approximate original distribution**):
+
+![75110-f682f83675fa42ee](https://user-images.githubusercontent.com/43735308/155667245-9bdc1643-1860-433b-8684-be149187c3e7.jpg)
+
+And then the binomial distribution (**Using Binomial distribution to approximate original distribution**):
+
+![75110-b7a85dc7ac779750](https://user-images.githubusercontent.com/43735308/155667286-de939f2b-1430-4a54-984b-4e8802e1a570.jpg)
+
+We can see that using uniform ditribution has less information loss than using dinomial distribution. If we have to choose one between those 2 distribution, we should choose uniform distribution.
+
+### Divergence is not distence
+
+Normally, some "teammates" will take KL-divergence as a measurement of distance between different distribution. However, it is not, becuase according to the formula of KL-divergence it is easy to notice that KL-divergence does not symmetry (distance metric should be syemmetry). If we use **original distribution to approximate Binomial distribution**:
+
+![75110-c72abbdf1938256e](https://user-images.githubusercontent.com/43735308/155668139-ee42d7f4-0401-40a7-ade5-6ae04e9b4c86.jpg)
+
+Well, ```Dkl (Observed || Binomial) != Dkl (Binomial || Observed)```
 
 
 
