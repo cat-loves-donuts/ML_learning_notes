@@ -34,6 +34,19 @@ K-L divergence originates from information theory. Information theory mainly stu
 
 ![75110-7977551fba322af7](https://user-images.githubusercontent.com/43735308/155515459-b4e6e0e6-23f6-424d-b2cd-f084b1e1c788.jpg)
 
+The log element do not have a certain base, the base could be 2, e or 10, etc. If we use 2 as base to calculate the H, we could take this H value as the minimum number of bits required to encode the information. Let's take the space worms as an example, information means the expirical distribution which we got from the observation gives the number of teeths. The entropy of the original probability distribution is 3.12 bits, it means the number of bits we need to encode th information of space worms teeth number probability.
+
+But the entropy value do not tell us how to compress data to the minimum entropy or how to encode the data to get the optimal result (storage optimal). The main role of entropy is to tell us the theoretical lower bound (storage space) of the optimal encoding information scheme, and a way to measure the amount of information in the data. Understanding entropy, we know how much information is contained in the data, and now we can calculate how much information is lost when we use a probability distribution with parameters to approximate the original data distribution.
+
+### Using KL-divergence to measure information loss
+
+The p is the observed probability distribution, q is another approximate distribution used to approximate p, then the KL-divergene of p and q is:
+
+![75110-e94b5412d85e5698](https://user-images.githubusercontent.com/43735308/155649082-8edd8bd7-7c5e-4c7f-a0df-0a3712c02cd8.jpg)
+
+
+
+
 
 
 
