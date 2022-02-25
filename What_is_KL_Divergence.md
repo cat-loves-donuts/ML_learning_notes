@@ -96,6 +96,35 @@ Well, we all know that his model is strange, so when we have same KL-convergence
 
 Take a summary, we used KL-divergence as target function and find parameters in binomial distribution model ```p=0.57``` and our strage model ```p=0.47```. Yes, the main point in this section is **using KL-divergence as target function to optimaize models**.
 
+### About entropy
+
+**Information entropy**: When the encoding scheme is perfect, the shortest average encoding length.
+
+**Cross entropy**: When the encoding scheme is not perfect (because the estimation of the probability distribution is not normally correct), the average encoding length. Is a loss function commonly used in neural networks.
+
+**Relative entropy**: KL-divergence, the increase in the average encoding length relative to the minimum value when the encoding scheme is not perfect.
+
+**Why we use corss-entropy rather than KL-convergence in loss function?**
+
+KL-divergence = cross-entropy - entropy, ```DKL( p||q )=H(p,q)−H(p)```.
+
+In the NN domains, ```H(p)``` will not change, thus ```DKL(p||q)``` equial to ```H(p,q)```.
+
+## Last part
+
+It is time to put some official things here
+
+The defination of KL-divergence:
+
+![75110-5d773218b2511d9a](https://user-images.githubusercontent.com/43735308/155671818-9fae3348-0a9e-4a46-99ab-21cfe9a26580.jpg)
+
+Some notice when calculate KL-divergence；
+
+![75110-f55d663d60503fa4](https://user-images.githubusercontent.com/43735308/155671870-d6c538c9-7609-405f-954f-7ddd9db79bf5.jpg)
+
+How to deal with ```log0```:
+
+![75110-a7dc83686d7206c1](https://user-images.githubusercontent.com/43735308/155671920-dd38e5dd-cda8-4dd7-b41c-d6d434626c68.jpg)
 
 
 
