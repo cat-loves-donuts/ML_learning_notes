@@ -68,7 +68,33 @@ Normally, some "teammates" will take KL-divergence as a measurement of distance 
 
 ![75110-c72abbdf1938256e](https://user-images.githubusercontent.com/43735308/155668139-ee42d7f4-0401-40a7-ade5-6ae04e9b4c86.jpg)
 
-Well, ```Dkl (Observed || Binomial) != Dkl (Binomial || Observed)```
+Well, ```Dkl (Observed || Binomial) != Dkl (Binomial || Observed)```.
+
+### Using KL-divergence to optimize models
+
+The probability parameter we used for previous binomial distribution is ```p=0.57```, this is the mean value of the original data. ```p``` is between ```[0, 1]```, we need to choose a ```p``` value and construct a binomial distribution, our target is minimize the approximate error (KL-divergence). Thus what ```p``` we should choose?
+
+This is the KL-divergence of original data distribution and binomial distribution when the parameter ```p``` is changing:
+
+![75110-e6ca24b145a5ca8c](https://user-images.githubusercontent.com/43735308/155669257-4e67a8b2-e77f-4845-be76-0ae61118056a.jpg)
+
+From the previous Pic, we could see that lowest KL-divergence located at the bottom of the curve, which ```p=0.57```. Thus our binomial distribution is the optimal distribution/ Please note that the binomial model is the best....
+
+The previous situation we only considered binomial and uniform distribution model, then we will consider another model. First, let us seperate the original data into 2 parts, the first part only contains the probability of number of teeth from 0 to 5, the second part contains the probability of number of teeth from 6 to 10.
+
+![75110-76a03ef0cd285801](https://user-images.githubusercontent.com/43735308/155669909-30bb32ee-a97a-4953-84d0-380a09248245.jpg)
+
+It means the probability of a worm has number of teeth ```x=i``` is ```p/5```, the probability of ```x=j``` is ```(1-p)/6```, where ```i=0,1,2,3,4,5``` and ```j=6,7,8,9,10```. Aha, a new model borned and very strange.... This model only has one parameter  ```p``` and we could draw a KL-divergence curve like what we didi to binomial distribution:
+
+![75110-dd374eaec9c5ad74](https://user-images.githubusercontent.com/43735308/155670391-c55c75df-22a1-4a52-a21a-af89a54ceb72.jpg)
+
+Well, when ```p=0.47```, KL-divergence has the lowest value of **0.338**. Wait.... Farmiliar, right? Yes, this value is exactly same with the KL-convergence when we use uniform distribution (That doesn't mean anything). Let us continue generating the probability distribution of this strage model, it looks like uniform distribution indeed...
+
+![75110-857b751b045a3aa2](https://user-images.githubusercontent.com/43735308/155670972-ca09572e-0eb3-4beb-9dd9-10f52f238b89.jpg)
+
+Well, we all know that his model is strange, so when we have same KL-convergence, we will more likely to use more common and simple model like uniform distribution model.
+
+Take a summary, we used KL-divergence as target function and find parameters in binomial distribution model ```p=0.57``` and our strage model ```p=0.47```. Yes, the main point in this section is **using KL-divergence as target function to optimaize models**.
 
 
 
