@@ -44,8 +44,11 @@ The p is the observed probability distribution, q is another approximate distrib
 
 ![75110-e94b5412d85e5698](https://user-images.githubusercontent.com/43735308/155649082-8edd8bd7-7c5e-4c7f-a0df-0a3712c02cd8.jpg)
 
-Obviously, KL-divergence is the expectation of the log difference between the original distribution p and the approximate distribution q. 
+Obviously, KL-divergence is the expectation of the log difference between the original distribution p and the approximate distribution q. If we still use 2 as the base of log, then KL-divergence means the number of bits of information loss. We also use the follwoing way to repersent KL-divergence.
 
+![75110-5e6109b0e9ec780a](https://user-images.githubusercontent.com/43735308/155666519-326c5061-8072-4aea-9175-c8e1986caee6.jpg)
+
+![75110-d602c1e8d0fe3689](https://user-images.githubusercontent.com/43735308/155666571-21e40dd2-3fa7-4490-ad57-a0cc0bab1243.jpg)
 
 
 
