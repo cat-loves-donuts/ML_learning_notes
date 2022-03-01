@@ -52,9 +52,30 @@ What they do is after the last layer of transformer, they use a MLP layer to map
 
 **Interesting thing is that the encoder part (quantization part) are pre-trained and fixed during the image-to-text traing task.**
 
-### Performance
+### Large-scale training
 
-Better than some other models:
+They implement their 10-bilion parameter ERNIE-ViLG model on PaddlePaddle platform. The original discreption is:
+
+"we adopt Group Sharded data parallelism techniques [42, 43] to eliminate memory redundancies by partitioning the optimizer states, gradients, and parameters across multiple devices. In addition, activation recomputation [44] and mixed-precision [45] are applied to reduce the GPU memory footprint and increase throughput. Moreover, Optimizer-offload [46] is introduced to swap the sharded optimizer states and master parameters to the CPU which largely reduces the GPU memory footprint. Furthermore, we combine Optimizer-offload with Gradient Accumulation to bring down the communication frequency between CPU and GPU, delivering a higher computation efficiency."
+
+### Experiment
+
+They used VQGAN, an enhanced variant of VQ-VAE as image tokenizer, some parameters are showing:
+
+#### VQGAN
+
+**f** (denotes the reduction factor in the side-length): 8
+**vocab size**: 8192
+
+They pre-process the original image to 256 * 256 through center crop, and thus the length of the visual discrete token sequence n is 1024 (h × w, h = w = 32).
+
+#### Transformer
+
+**transformer layers**: 48
+**hidden units**: 4096
+**attention heads**: 64
+
+
 
 
 
