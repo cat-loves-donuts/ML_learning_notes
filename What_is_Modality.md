@@ -62,6 +62,23 @@ Alignment is used to find the matching relationships of different modal informat
 
 ### Multimodal Fusion
 
+Used to combining the indormation of multiple modalities for object detection (classification or regression), this is one of the earliest research directions of MMML. Bsed on the level of fusion, we could divided it into pixcel level, feature level and decision level. They correspond to fusing raw data, fusing abstract features and fusing decision results respectively. The feature level can be divided into two categories: early and late, representing that the fusion occurs in the early and late stages of feature extraction. Of course there are also hybrid methods that mix multiple fusion levels.
+
+The common Machine learning methods all could be used in multimodal fusion:
+
+**Visual-Audio Recognition**: Doing detection or recongnision on video and audio information from same instance.
+
+**Multimodal sentiment analysis**: Comprehensive use of data from multiple modalities (such as text, facial expressions, and voices), through complementation, eliminate ambiguity and uncertainty, and obtain more accurate judgment results of emotion types.
+
+**Mobile Identity Authentication**: Identify whether this user is a regestriated user through multiple sensors.
+
+The major difficculities of Multimodal fusion are how to judge the confidence level of each modality, how to judge the correlation between modalities, how to reduce the dimension of multimodal feature information and how to register multimodal data collected asynchronously.
+
+Some traditional machine learning methods could be used in this field, we do not mention it here.
+
+### Co-learning
+
+
 
 
 
