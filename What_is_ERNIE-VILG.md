@@ -26,9 +26,21 @@ If the input is a image, they use a VQ-VAE to get the featuer map and replace th
 
 ### Bidirectional Generative model
 
- the transformer architecture is similar with BERT and UniLM, which have 2 inputs, source tokens and target tokens. The source tokens are allowed to attend all the source tokens and the target tokens are allowed to attend the source tokens and the target tokens lie left to them. (You can check )
+The transformer architecture is similar with BERT and UniLM, which have 2 inputs, source tokens and target tokens. The source tokens are allowed to attend all the source tokens and the target tokens are allowed to attend the source tokens and the target tokens lie left to them. (You can check UniLM:https://github.com/cat-loves-donuts/ML_learning_notes/blob/main/What_is_UniLM.md for more details)
 
+Using text tokens combine with image tokens for text-to-image task and using image tokens combine with text tokens for image-to-text tasks. The loss is showing below:
 
+![2](https://user-images.githubusercontent.com/43735308/156121906-2f6a0273-b18a-430f-87e6-caec801967a5.PNG)
+
+It is a generation loss but, because of parameter sharing, they sum them up.
+
+### Mask design
+
+Becuse the length of the image tokens are longer than text tokens, it will use a long time and large memory to train and inference. Therefore, they used a sparese attention method to speed up by 25% and save 50% of GPU memory. 
+
+![3](https://user-images.githubusercontent.com/43735308/156122621-d826734c-df11-436d-b850-a82ea311c6a4.PNG)
+
+For ```i```th transformer layer, using row attention (i mod 4 !=2), using column attention (i mod 4 =2) and comvolutional attention (the last layer).
 
 
 
