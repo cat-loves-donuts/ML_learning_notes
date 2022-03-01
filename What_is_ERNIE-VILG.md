@@ -40,7 +40,23 @@ Becuse the length of the image tokens are longer than text tokens, it will use a
 
 ![3](https://user-images.githubusercontent.com/43735308/156122621-d826734c-df11-436d-b850-a82ea311c6a4.PNG)
 
-For ```i```th transformer layer, using row attention (i mod 4 !=2), using column attention (i mod 4 =2) and comvolutional attention (the last layer).
+For ```i```th transformer layer, using row attention (i mod 4 !=2), using column attention (i mod 4 =2) and comvolutional attention (the last layer). The previous Pic shows a hypothetical version which has 6 text tokens and 16 image tokens (4X4) and convolutional kernel size of 3X3. The actual kernel size of our model is 11×11 following DALL-E.
+
+### Text-to-image Synthesis
+
+The most important thing is that they proposed a method to unified training the transformer and the deocder of VQ-VAE.
+
+Mostly for this part, we will seperate the model into 2 stages, discrete reperesentation sequence generation and image reconstruction, and train them separetly, like the red line in Pic.1. We firstly get the repersentation and map the index back to the codebook to find the feature vectors and then reconstruct the image and these 2 stage cannot train together because we have a mapping operation. 
+
+What they do is after the last layer of transformer, they use a MLP layer to mapping the index back to the feature map, thus the gradient can do back propagation and train the model end-to-end.
+
+**Interesting thing is that the encoder part (quantization part) are pre-trained and fixed during the image-to-text traing task.**
+
+### Performance
+
+Better than some other models:
+
+
 
 
 
