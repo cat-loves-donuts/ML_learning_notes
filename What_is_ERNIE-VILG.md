@@ -65,6 +65,7 @@ They used VQGAN, an enhanced variant of VQ-VAE as image tokenizer, some paramete
 #### VQGAN
 
 **f** (denotes the reduction factor in the side-length): 8
+
 **vocab size**: 8192
 
 They pre-process the original image to 256 * 256 through center crop, and thus the length of the visual discrete token sequence n is 1024 (h × w, h = w = 32).
@@ -72,7 +73,9 @@ They pre-process the original image to 256 * 256 through center crop, and thus t
 #### Transformer
 
 **transformer layers**: 48
+
 **hidden units**: 4096
+
 **attention heads**: 64
 
 
