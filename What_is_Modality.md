@@ -78,6 +78,14 @@ Some traditional machine learning methods could be used in this field, we do not
 
 ### Co-learning
 
+It means use a modal information which has rich resources to help another modal which contains poor resources to learn. One of the popular example is Transfer Learning, like fine-tuning the model trained on Image-Net to your own dataset.
+
+The commonly disscusing part in Transfer Learning is Domain Adaptation, it means how to applying the model which trained on train domain on application domain. Another popular part is Zero-Shot Learning and One-Shot Learning. 
+
+Another work in Co-learning is Co-training which is researching how to expand the small number of labels in multimodal data so that we could get more label information.
+
+It is clear to see that the problems which Co-learning need to solve is not related to solving a task. Therefore, Co-learning could be used to assist Multimodal translation, Alignment and Fusion problems.
+
 
 
 
