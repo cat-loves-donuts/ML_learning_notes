@@ -20,7 +20,13 @@ In the previous Pic we could see that the left blue block means using transforme
 
 ### Image Discrete Repersentation
 
-They are using VQ-VAE to repersent the images. VQ-VAE is similar to VAE which has encoder and decoder. For VQ-VAE, the encoder and decoder are both multiple Conv layers, after get the feature map from the encoder, VQ-VAE will use nearest neighbor to find the closest vector in the codebook and replace the original features in the feature map with codebook vectores (codebook vectores has same dimenssions with feature map). Then use the decoder to DeConv them back to images. You could check previous page for more details: 
+They are using VQ-VAE to repersent the images. VQ-VAE is similar to VAE which has encoder and decoder. For VQ-VAE, the encoder and decoder are both multiple Conv layers, after get the feature map from the encoder, VQ-VAE will use nearest neighbor to find the closest vector in the codebook and replace the original features in the feature map with codebook vectores (codebook vectores has same dimenssions with feature map). Then use the decoder to DeConv them back to images. You could check previous page for more details: https://github.com/cat-loves-donuts/ML_learning_notes/blob/main/What_is_VQVAE_and_autoregressive_model.md
+
+If the input is a image, they use a VQ-VAE to get the featuer map and replace the feature map with the featuer map vectors with index of the code book to generate a discrete repersentation of the image and flatten, then input to transformer. 
+
+### Bidirectional Generative model
+
+ the transformer architecture is similar with BERT and UniLM, which have 2 inputs, source tokens and target tokens. The source tokens are allowed to attend all the source tokens and the target tokens are allowed to attend the source tokens and the target tokens lie left to them. (You can check )
 
 
 
