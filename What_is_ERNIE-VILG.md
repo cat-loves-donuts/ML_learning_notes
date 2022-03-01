@@ -20,7 +20,7 @@ In the previous Pic we could see that the left blue block means using transforme
 
 ### Image Discrete Repersentation
 
-They are using VQ-VAE to repersent the images. Basicly is using a 
+They are using VQ-VAE to repersent the images. VQ-VAE is similar to VAE which has encoder and decoder. For VQ-VAE, the encoder and decoder are both multiple Conv layers, after get the feature map from the encoder, VQ-VAE will use nearest neighbor to find the closest vector in the codebook and replace the original features in the feature map with codebook vectores (codebook vectores has same dimenssions with feature map). Then use the decoder to DeConv them back to images. You could check previous page for more details: 
 
 
 
