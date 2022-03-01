@@ -2,12 +2,46 @@
 
 Translated from https://blog.csdn.net/electech6/article/details/85142769
 
-Bsed on https://www.cs.cmu.edu/~morency/MMML-Tutorial-ACL2017.pdf
+Based on https://www.cs.cmu.edu/~morency/MMML-Tutorial-ACL2017.pdf
 
 ## Modality
 
 Each source or form of imformation could be called a modality. More generally, we could call 2 languages are 2 different modality or 2 data collected from different condition can also called 2 different Modality.
 
-Thus, MultiModal Machine Learning (MMML), it aims to process and understand multi-source modal information through machine learning methods. Currently, a popular domain is multimodal learning among images, vedios, audios and semantics. The study of multimodal learning starts from 1970s and entered Deep Learning field since 2010. 
+Thus, MultiModal Machine Learning (MMML), it aims to process and understand multi-source modal information through machine learning methods. Currently, a popular domain is multimodal learning among images, vedios, audios and semantics. The study of multimodal learning starts from 1970s and entered Deep Learning field since 2010.
+
+## The categories of MMML
+
+Have 5 major directions:
+
+1. Multimodal Representation
+2. Modal Translation
+3. Alignment
+4. Multimodal Fusion
+5. Co-learning
+
+### Multimodal Representation
+
+Single-modal representation learning is used to represent information as vectors or more abstracted higher-level feature vectors which can be processed by computers, while the Multimodal representation learning is trying to learn better feature representations by taking advantage of the complementarity between multimodalities and eliminating the redundancy between modalities. It includes 2 major research directions: **Joint Representations** and **Coordinated Representations**.
+
+The **Joint Representations** will map numtiple modal informations into a unified multimodal vector space.
+
+The **Coordinated Representations** will map different modal into their own vectore space but each vector after mapping need to follow some restriction, such as linear correlation.
+
+![111](https://user-images.githubusercontent.com/43735308/156140109-4d05f205-46a4-48dc-86ef-d1cfe2c7fb01.PNG)
+
+The experiments in the paper learn the joint probability distribution P(picture, text) of pictures and texts. In the application stage, input a picture, use the conditional probability P(text|picture) to generate text features, and get the corresponding text description of the picture. While inputting text, use the conditional probability P(picture|text), you can generate picture features. 
+
+![222](https://user-images.githubusercontent.com/43735308/156141833-85056836-8651-43c9-9eb1-6ff490194c37.PNG)
+
+![333](https://user-images.githubusercontent.com/43735308/156141854-1a10febd-a88b-4852-a5c3-4bd195269767.PNG)
+
+A classic and interesting application of collaborative representation learning comes from the article "Unifying Visual-Semantic Embeddings with Multimodal Neural Language Models". Using a feature that the collaboratively learned feature vectors satisfy addition and subtraction arithmetic operations, we could search a image which satisfy the "specified transformation semantics" with a given image. You could check the following image as example:
+
+![444](https://user-images.githubusercontent.com/43735308/156142743-aaa40db7-c292-4772-98db-da822d1f1940.PNG)
+
+
+
+
 
 
