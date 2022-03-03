@@ -73,6 +73,10 @@ Using OpenCV and DIPilb to do this.
 
 Note: assume that there are no texts inside the stacked bars and each stack has a distinct color. After extracting the individual bars we use a local search algorithm to extract the stacks.
 
+1. find the midpoint of the two edges of the rectangle along its length. For horizontal bar charts lengthwise is the x-axis and for vertical bar charts lengthwise is the y-axis.
+2. With these two points as start and end points, we move along the line made by them and detect sudden changes in pixel values between two adjacent pixel points. We take the center of those pixel points as the border or the edge point separating two adjacent stacks.
+3. Continues until we find all the stacks inside all the bars.
+
 
 
 
