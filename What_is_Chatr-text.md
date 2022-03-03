@@ -1,5 +1,7 @@
 # What is Chart-text
 
+Based on paper: https://arxiv.org/abs/1812.10636
+
 They used 2 CNN to classify the chart types and detect the content location. Then use OCR to get the information and connected compolents analysis to getthe bars. Then based on the type of chart to generate the text descreaption (Alternative Text).
 
 ## Steps
