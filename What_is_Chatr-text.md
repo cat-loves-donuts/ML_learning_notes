@@ -77,7 +77,15 @@ Note: assume that there are no texts inside the stacked bars and each stack has 
 2. With these two points as start and end points, we move along the line made by them and detect sudden changes in pixel values between two adjacent pixel points. We take the center of those pixel points as the border or the edge point separating two adjacent stacks.
 3. Continues until we find all the stacks inside all the bars.
 
+### Pie chart
 
+Note: each wedge has a distinct colour, and the corresponding labels are present adjacent to the wedge. 
+
+1. Use Canny edge detection to create an edged image of the pie chart.
+2. Fit a robust circle to the pie using RANSAC. We use RANSAC because it is more efficient in ignoring outliers while fitting a circle.
+3. Sample 1000 pixels uniformly along the fitted circle whose radius is 0.2*R. Where, R is the radius of the fitted circle.
+4. Traverse the sampled points sequentially and detect sudden change in pixel intensity between two adjacent pixel points. They take the center of those two pixel points as the border point between wedges.
+5. After detecting the border points, they measure the clockwise angle between them with respect to the center of the fitted circle to determine the angle of each wedge.
 
 
 
