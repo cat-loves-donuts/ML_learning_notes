@@ -33,7 +33,45 @@ batch size: ```64```
 
 ## Detection
 
+Used Faster-RCNN todo the detection task, because it has the higher accuracy on small objects.
 
+Input size: ```keep aspect ratio but shorter side must bigger than 500 pixels```
+
+epoch: ```50,000```
+
+batch size: ```1```
+
+anchor box size: ```0.25, 0.5, 0.75, 1.0, 1.5```
+
+aspect tatios of BBox: ```0.5, 1.0, 2.0```
+
+BBox threshold: ```0.5```
+
+## Tesseract OCR
+
+Using Tessereact OCR to get the text infprmation from the image.
+
+1. Gray scale the image and threshold it to obtain a binary image. 
+2. Fit a minimum bounding rectangle to the binary image and measure the angle made by the rectangle w.r.t. the horizontal. 
+3. Rotate the image to horizontal.
+
+Note: they found that hights is 130 pixel can siginificantly increase the OCR accuracy.
+
+## Chart excraction
+
+Based on differenttype of chart they applied different stratagies to exract chart information.
+
+### Horizontal and vertical bar charts
+
+Using OpenCV and DIPilb to do this.
+
+1. Gray scale image and use median filter to remove noises.
+2. Threshold the image and use area opening morphological operation to remove small objects.
+3. label regions and use connection components analysis to get the bars.
+
+### Stacked horizontal and vertical bar charts
+
+Note: assume that there are no texts inside the stacked bars and each stack has a distinct color. After extracting the individual bars we use a local search algorithm to extract the stacks.
 
 
 
